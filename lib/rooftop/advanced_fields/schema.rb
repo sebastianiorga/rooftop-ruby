@@ -12,7 +12,9 @@ module Rooftop
         
         def advanced_fields_schema
           return @advanced_fields_schema if defined?(@advanced_fields_schema)
-          @advanced_fields_schema = reload_advanced_fields_schema!
+          @advanced_fields_schema = ::Rails.cache.fetch("/advanced_fields_schema/#{name}") do
+            reload_advanced_fields_schema!
+          end
         end
 
         def advanced_fields

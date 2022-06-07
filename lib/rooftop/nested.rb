@@ -1,6 +1,6 @@
 module Rooftop
   module Nested
-    
+
     def self.included(base)
       @nested_classes ||= []
       @nested_classes << base unless @nested_classes.include?(base)
