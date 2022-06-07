@@ -16,7 +16,7 @@ module Rooftop
       def object
         if self.type == "post_type"
           begin
-            klass = Rooftop.configuration.post_type_mapping[self.object_type] || self.object_type.classify.constantize
+            klass = Rooftop.configuration.post_type_mapping[self.object_type].constantize || self.object_type.classify.constantize
             klass.find_by(slug: self.slug).first
           rescue
             raise UnmappedObjectError, "Couldn't find an mapping between the #{self.object_type} post type and a class in your code."

@@ -1,9 +1,15 @@
 module Rooftop
   module Nested
+    mattr_accessor :extra_includes
 
     def self.included(base)
+      self.extra_includes ||= []
       @nested_classes ||= []
       @nested_classes << base unless @nested_classes.include?(base)
+
+      extra_includes.each do |module_to_include|
+        base.include module_to_include
+      end
     end
 
     def self.nested_classes

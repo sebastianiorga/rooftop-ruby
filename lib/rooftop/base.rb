@@ -1,6 +1,10 @@
 module Rooftop
   module Base
+    mattr_accessor :extra_includes
+
     def self.included(base)
+      self.extra_includes ||= []
+
       @included_classes ||= []
       @included_classes << base unless @included_classes.include?(base)
       base.extend ClassMethods
@@ -44,6 +48,19 @@ module Rooftop
       # Set up the hooks identified in other mixins. This method is defined in Rooftop::HookCalls
       base.send(:"setup_hooks!")
 
+      # puts '----------------'
+      # puts extra_includes
+      # puts base
+
+      # puts '----------------'
+      # puts '----------------'
+      # puts caller
+      # puts '----------------'
+      # puts '----------------'
+
+      extra_includes.each do |module_to_include|
+        base.send :include, module_to_include
+      end
     end
 
     def self.included_classes

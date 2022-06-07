@@ -37,7 +37,7 @@ module Rooftop
                 related
               end
             end
-            klass = Rooftop.configuration.post_type_mapping[relationship[:class].to_sym] || relationship[:class].to_s.classify.constantize
+            klass = Rooftop.configuration.post_type_mapping[relationship[:class].to_sym].constantize || relationship[:class].to_s.classify.constantize
             resolved = klass.where(id: related_ids, order_by: :post__in).to_a
 
           rescue
